@@ -1,10 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { getNewReleases } from "../api/spotify"; // 실제 API 호출 함수
+import { getNewReleases } from "../apis/albumApi";
+import useClientCredentialToken from "./useClientCredentialToken";
 
 const useGetNewReleases = () => {
+  const clientCredentialToken = useClientCredentialToken();
+
   return useQuery({
-    queryKey: ["newReleases"], // 1. 쿼리 식별 키 (배열)
-    queryFn: getNewReleases, // 2. Promise를 반환하는 API 호출 함수
+    queryKey: ["newReleases"],
+    queryFn: () => {
+      if (!clientCredentialToken) {
+        throw new Error("No token available");
+      }
+      return getNewReleases(clientCredentialToken);
+    },
+    enabled: !!clientCredentialToken,
   });
 };
 

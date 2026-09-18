@@ -6,16 +6,21 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import theme from "./theme";
 import { ThemeProvider, CssBaseline } from "@mui/material";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <App />
+        </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

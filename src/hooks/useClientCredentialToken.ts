@@ -9,3 +9,5 @@ const useClientCredentialToken = (): string | undefined => {
   const clientCredentialToken = data?.access_token;
   return clientCredentialToken;
 };
+
+export default useClientCredentialToken;
